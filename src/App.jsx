@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ChatbotIcon from "./components/chatbotIcon";
-import ChatForm from "./components/chatform";
+import ChatbotIcon from "./components/ChatbotIcon";
+import ChatForm from "./components/ChatForm";
 import ChatMessage from "./components/ChatMessage";
 import { companyInfo } from "./components/companyInfo";
 
