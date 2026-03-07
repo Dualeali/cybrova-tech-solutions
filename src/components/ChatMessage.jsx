@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import ChatbotIcon from "./chatbotIcon";
+import ChatbotIcon from "./ChatbotIcon";
 
 function ChatMessage({ sender, text, timestamp }) {
   const isBot = sender === "bot";
