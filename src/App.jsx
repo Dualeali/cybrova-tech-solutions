@@ -5,6 +5,7 @@ import ChatForm from "./components/ChatForm";
 import ChatMessage from "./components/ChatMessage";
 import { companyInfo } from "./components/companyInfo";
 import MainWebsite from "./components/Website/MainWebsite";
+import InstallPWA from "./components/InstallPWA";
 
 const QUICK_ACTIONS = [
   { id: "services", label: "View Services", icon: <Globe size={14} />, query: "What services does CYBROVA TECH SOLUTIONS offer?" },
@@ -214,6 +215,7 @@ function App() {
 
   return (
     <>
+      <InstallPWA />
       {/* MAIN WEBSITE BACKGROUND CONTENT */}
       <MainWebsite />
 
