@@ -45,20 +45,40 @@ const Navbar = () => {
                                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-neon transition-all duration-300 group-hover:w-full"></span>
                             </motion.a>
                         ))}
-                        <motion.a
-                            href="#contact"
+                        <motion.button
+                            onClick={() => {
+                                if (window.pwaInstallPrompt) {
+                                    window.pwaInstallPrompt.prompt();
+                                } else {
+                                    alert("CYBROVA might already be installed, or your browser requires you to use 'Add to Home Screen' from its menu.");
+                                }
+                            }}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-5 py-2 rounded-full bg-brand-accent/20 border border-brand-accent/50 text-white font-medium text-sm hover:bg-brand-accent/40 shadow-[0_0_15px_rgba(122,60,255,0.2)] transition-all"
+                            className="px-5 py-2 flex items-center gap-2 rounded-full bg-brand-neon text-brand-dark font-bold text-sm hover:bg-brand-neon-light shadow-[0_0_15px_rgba(0,255,136,0.4)] transition-all"
                         >
-                            Get Started
-                        </motion.a>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Install App
+                        </motion.button>
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center">
+                    <div className="md:hidden flex items-center gap-4">
+                        <button
+                            onClick={() => {
+                                if (window.pwaInstallPrompt) {
+                                    window.pwaInstallPrompt.prompt();
+                                } else {
+                                    alert("Installed already, or tap 'Add to Home Screen' in browser options.");
+                                }
+                            }}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-neon text-brand-dark text-xs font-bold shadow-[0_0_10px_rgba(0,255,136,0.3)] transition-transform active:scale-95"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Install
+                        </button>
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="text-gray-300 hover:text-white focus:outline-none"

@@ -22,11 +22,15 @@ const InstallPWA = () => {
       e.preventDefault();
       setSupportsPWA(true);
       setPromptInstall(e);
+      window.pwaInstallPrompt = e; // Expose globally for Navbar buttons
     };
 
     window.addEventListener("beforeinstallprompt", handler);
 
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    return () => {
+        window.removeEventListener("beforeinstallprompt", handler);
+        delete window.pwaInstallPrompt;
+    };
   }, []);
 
   const onClickInstall = () => {
