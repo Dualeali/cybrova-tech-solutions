@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Send } from "lucide-react";
 
 function ChatForm({ onSendMessage }) {
   const [value, setValue] = useState("");
@@ -16,7 +17,7 @@ function ChatForm({ onSendMessage }) {
   };
 
   return (
-    <form action={"#"} className="input-form" onSubmit={handleFormSubmit}>
+    <form action="#" className="input-form" onSubmit={handleFormSubmit}>
       <input
         type="text"
         name="message"
@@ -28,10 +29,11 @@ function ChatForm({ onSendMessage }) {
       />
       <button
         type="submit"
-        className="material-symbols-rounded send-button"
+        className="send-button"
         disabled={!value.trim()}
+        aria-label="Send message"
       >
-        arrow_upward
+        <Send size={18} strokeWidth={2.5} />
       </button>
     </form>
   );

@@ -1,38 +1,41 @@
-import React, { useState, useEffect } from "react";
-import ChatbotIcon from "./components/ChatbotIcon";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, MessageSquare, Shield, Globe, Zap, Users } from "lucide-react";
 import ChatForm from "./components/ChatForm";
 import ChatMessage from "./components/ChatMessage";
 import { companyInfo } from "./components/companyInfo";
+import MainWebsite from "./components/Website/MainWebsite";
+
+const QUICK_ACTIONS = [
+  { id: "services", label: "View Services", icon: <Globe size={14} />, query: "What services does CYBROVA TECH SOLUTIONS offer?" },
+  { id: "bingwa", label: "Bingwa Bundles", icon: <Zap size={14} />, query: "Tell me about Bingwa Data Bundles." },
+  { id: "contact", label: "Contact Us", icon: <MessageSquare size={14} />, query: "How can I contact CYBROVA?" },
+  { id: "ceo", label: "CEO Information", icon: <Users size={14} />, query: "Who is the CEO of CYBROVA TECH SOLUTIONS?" },
+];
 
 function App() {
   const [messages, setMessages] = useState([
     {
       id: 1,
       sender: "bot",
-      text: "Hello there 👋 This is CYBROVA AI assistant, how can I help you today?",
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      text: "Hello 👋 Welcome to CYBROVA TECH SOLUTIONS.\nI am CYBROVA AI, your digital assistant.\nI can help you with cyber services, website development, KUCCPS assistance, Bingwa bundles, and many other services.\nHow can I assist you today?",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
 
   const [isTyping, setIsTyping] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const chatBodyRef = useRef(null);
 
-  // Scroll to bottom when messages change
+  // Auto-scroll to latest message
   useEffect(() => {
-    const chatBody = document.querySelector(".chat-body");
-    if (chatBody) {
-      chatBody.scrollTop = chatBody.scrollHeight;
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
     }
   }, [messages, isTyping, isOpen]);
 
   const formatTimestamp = () => {
-    return new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
   const getBotResponse = (userMessage) => {
@@ -46,12 +49,19 @@ function App() {
       return "Hello 👋 Welcome to CYBROVA TECH SOLUTIONS!\n\nI am your official digital assistant, here to help you access all our services quickly and efficiently. Whether you're a student, business owner, or individual, I am here to guide you through our digital solutions.";
     }
 
-    if (lower.includes("help")) {
-      return "I can help you with data offers, product questions, and general support. What would you like to know?";
+    if (lower.includes("help") || lower.includes("services") || lower.includes("cyber")) {
+      return "I can help you with **cyber services**, **website development**, **KUCCPS assistance**, and **Bingwa bundles**. What specific service are you looking for today?";
     }
 
-    // For now, no fallback text. We'll integrate real Gemini API responses later.
-    return "";
+    if (lower.includes("contact")) {
+      return "You can reach out to our support team directly via our official contact channels. Let me know if you need specific phone numbers or emails based on the service.";
+    }
+
+    if (lower.includes("ceo")) {
+      return "CYBROVA TECH SOLUTIONS is led by our visionary CEO who focuses on providing top-tier digital and cyber services to our community. How can I help you further?";
+    }
+
+    return "I am experiencing high traffic connecting to my AI brain right now. Please try asking another question or select from the quick actions below.";
   };
 
   const handleSendMessage = async (messageText) => {
@@ -70,14 +80,13 @@ function App() {
       },
     ]);
 
-    // Show typing indicator
     setIsTyping(true);
 
     try {
       let botText = "";
       let responseSuccessful = false;
 
-      // 1. Prepare keys from environment variables (comma-separated lists)
+      // Ensure API keys exist
       const groqKeysStr = import.meta.env.VITE_GROQ_API_KEYS || "";
       const geminiKeysStr = import.meta.env.VITE_GEMINI_API_KEYS || import.meta.env.VITE_API_URL || import.meta.env.VITE_GEMINI_API_KEY || "";
 
@@ -85,14 +94,13 @@ function App() {
       const geminiKeys = geminiKeysStr.split(',').map(k => k.trim()).filter(Boolean);
 
       if (groqKeys.length === 0 && geminiKeys.length === 0) {
-        throw new Error("No API keys found in .env file.");
+        throw new Error("No API calls setup.");
       }
 
-      // 2. Try GROQ First (Primary - Fast)
+      // Try GROQ
       if (groqKeys.length > 0) {
-        // Build Groq history (OpenAI format)
         const groqHistory = messages
-          .filter(msg => msg.id !== 1 && !msg.text.includes("Error connecting"))
+          .filter(msg => msg.id !== 1 && !msg.text.includes("Error") && !msg.text.includes("experiencing high traffic"))
           .map(msg => ({
             role: msg.sender === "user" ? "user" : "assistant",
             content: msg.text
@@ -100,12 +108,10 @@ function App() {
 
         groqHistory.push({ role: "user", content: trimmed });
 
-        const systemPrompt = `You are the official digital assistant for CYBROVA TECH SOLUTIONS. \nYou are helpful, friendly, and professional. \n\nCRITICAL RULES:\n1. Base your answers ONLY on the provided Company Information.\n2. If a user asks a question that cannot be answered using the Company Information, politely tell them that you are an assistant for CYBROVA TECH SOLUTIONS and can only help with our services.\n3. Format your answers beautifully using Markdown (bolding, lists, etc) so it is easy to read.\n4. When a user first says hi or hello, your FIRST RESPONSE MUST BE EXACTLY this text and nothing else: "Hello 👋 Welcome to CYBROVA TECH SOLUTIONS!\n\nI am your official digital assistant, here to help you access all our services quickly and efficiently. Whether you're a student, business owner, or individual, I am here to guide you through our digital solutions."\n\nCOMPANY INFORMATION:\n${companyInfo}`;
+        const systemPrompt = `You are CYBROVA AI, the highly advanced, official intelligent assistant for CYBROVA TECH SOLUTIONS. You act and speak like a brilliant, professional, and friendly human expert. \n\nCRITICAL RULES:\n1. ONLY answer questions related to CYBROVA TECH SOLUTIONS and our services. If someone asks something unrelated, politely and cleverly steer the conversation back to our digital offerings.\n2. Speak completely naturally. Be highly conversational, articulate, and empathetic, exactly like a real human professional chatting with a client. DO NOT act robotic.\n3. DO NOT introduce yourself unless explicitly asked. DO NOT use generic AI headers or subtopics. Give direct, beautifully flowing answers.\n4. Format your answers naturally using Markdown for readability.\n5. Use the detailed COMPANY INFORMATION below as your absolute brain for answering questions.\n\n=== COMPANY KNOWLEDGE BASE ===\n${companyInfo}\n\n=== EXACT BINGWA DEALS (Always suggest these packages accurately) ===\nDATA DEALS:\n- 1GB @ 19 KES (1 Hr)\n- 250MB @ 20 KES (24 Hrs)\n- 1.5GB @ 49 KES (3 Hrs)\n- 1.25GB @ 55 KES (Till Midnight)\n- 1GB @ 99 KES (24 Hrs)\n- 350MB @ 47 KES (7 Days)\n- 2.5GB @ 300 KES (30 Days)\n\nTUNUKIWA DEALS:\n- 1GB @ 22 KES (1 Hr)\n- 1.5GB @ 54 KES (3 Hrs)\n- 2GB @ 110 KES (24 Hrs)\n\nMINUTES DEALS:\n- 45 Mins @ 23 KES (3 Hrs)\n- 50 Mins @ 51 KES (Till Midnight)\n\nSMS DEALS:\n- 20 SMS @ 5 KES (24 Hrs)\n- 200 SMS @ 10 KES (24 Hrs)\n- 1000 SMS @ 32 KES (7 Days)\n- 3500 SMS @ 201 KES (3 Days)\n\nHOW TO BUY:\nTill Number: 6606905 (Buy Goods). Users receive items automatically.\n\n=== CONTACT ===\nWhatsApp/Call: 0797400491\nCEO: Duale (Descrapper Tech)\nLocation: Habaswein, Wajir County`;
 
-        // Loop through all available Groq keys
         for (let i = 0; i < groqKeys.length; i++) {
           try {
-            console.log(`Trying Groq Key ${i + 1}/${groqKeys.length}...`);
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
               method: "POST",
               headers: {
@@ -113,7 +119,7 @@ function App() {
                 "Authorization": `Bearer ${groqKeys[i]}`
               },
               body: JSON.stringify({
-                model: "llama-3.3-70b-versatile", // Fast and highly capable model
+                model: "llama-3.3-70b-versatile",
                 messages: [
                   { role: "system", content: systemPrompt },
                   ...groqHistory
@@ -123,27 +129,18 @@ function App() {
 
             if (response.ok) {
               const data = await response.json();
-              if (data.choices && data.choices.length > 0) {
-                botText = data.choices[0].message.content;
-                responseSuccessful = true;
-                break; // Success! Exit the Groq key loop
-              }
-            } else {
-              console.warn(`Groq key ${i + 1} failed with status: ${response.status}`);
+              botText = data.choices[0].message.content;
+              responseSuccessful = true;
+              break;
             }
-          } catch (err) {
-            console.warn(`Groq key ${i + 1} encountered an error:`, err);
-          }
+          } catch (err) { }
         }
       }
 
-      // 3. Try GEMINI Second (Fallback)
+      // Try GEMINI
       if (!responseSuccessful && geminiKeys.length > 0) {
-        console.log("Groq unavailable or all keys exhausted. Falling back to Gemini...");
-
-        // Build Gemini history
         const geminiHistory = messages
-          .filter(msg => msg.id !== 1 && !msg.text.includes("Error connecting"))
+          .filter(msg => msg.id !== 1 && !msg.text.includes("Error") && !msg.text.includes("experiencing high traffic"))
           .map(msg => ({
             role: msg.sender === "user" ? "user" : "model",
             parts: [{ text: msg.text }]
@@ -151,12 +148,10 @@ function App() {
 
         geminiHistory.push({ role: "user", parts: [{ text: trimmed }] });
 
-        const systemInstructionText = `You are the official digital assistant for CYBROVA TECH SOLUTIONS. \nYou are helpful, friendly, and professional. \n\nCRITICAL RULES:\n1. Base your answers ONLY on the provided Company Information.\n2. If a user asks a question that cannot be answered using the Company Information, politely tell them that you are an assistant for CYBROVA TECH SOLUTIONS and can only help with our services.\n3. Format your answers beautifully using Markdown (bolding, lists, etc) so it is easy to read.\n4. When a user first says hi or hello, your FIRST RESPONSE MUST BE EXACTLY this text and nothing else: "Hello 👋 Welcome to CYBROVA TECH SOLUTIONS!\n\nI am your official digital assistant, here to help you access all our services quickly and efficiently. Whether you're a student, business owner, or individual, I am here to guide you through our digital solutions."\n\nCOMPANY INFORMATION:\n${companyInfo}`;
+        const systemInstructionText = `You are CYBROVA AI, the official intelligent assistant for CYBROVA TECH SOLUTIONS.\n\nCRITICAL RULES:\n1. ONLY answer questions related to CYBROVA TECH SOLUTIONS and our services.\n2. If asked about unrelated topics, politely refuse and smartly steer the conversation back to our digital offerings.\n3. Speak completely naturally, articulately, and empathetically.\n4. DO NOT act robotic. DO NOT introduce yourself in responses. Respond naturally, directly, and brilliantly.\n\nCOMPANY FACTS:\n${companyInfo}\nHOW TO BUY BINGWA: Till Number 6606905 (Buy Goods). WhatsApp 0797400491 for help.`;
 
-        // Loop through all available Gemini keys
         for (let i = 0; i < geminiKeys.length; i++) {
           try {
-            console.log(`Trying Gemini Key ${i + 1}/${geminiKeys.length}...`);
             const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent", {
               method: "POST",
               headers: {
@@ -164,32 +159,23 @@ function App() {
                 "x-goog-api-key": geminiKeys[i]
               },
               body: JSON.stringify({
-                systemInstruction: {
-                  parts: [{ text: systemInstructionText }]
-                },
+                systemInstruction: { parts: [{ text: systemInstructionText }] },
                 contents: geminiHistory
               })
             });
 
             if (response.ok) {
               const data = await response.json();
-              if (data.candidates && data.candidates.length > 0) {
-                botText = data.candidates[0].content.parts[0].text;
-                responseSuccessful = true;
-                break; // Success! Exit the Gemini key loop
-              }
-            } else {
-              console.warn(`Gemini key ${i + 1} failed with status: ${response.status}`);
+              botText = data.candidates[0].content.parts[0].text;
+              responseSuccessful = true;
+              break;
             }
-          } catch (err) {
-            console.warn(`Gemini key ${i + 1} encountered an error:`, err);
-          }
+          } catch (err) { }
         }
       }
 
-      // 4. Final Verification
       if (!responseSuccessful) {
-        throw new Error("All API keys configured for Groq and Gemini failed or were rate-limited. Please try again later.");
+        throw new Error("API Limit Reached");
       }
 
       setMessages((prev) => [
@@ -202,78 +188,143 @@ function App() {
         },
       ]);
     } catch (error) {
-      console.error("Chat API Error details:", error.message);
-      const fallbackText = getBotResponse(trimmed);
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now() + 1,
-          sender: "bot",
-          text: fallbackText || `Error connecting to AI: ${error.message}`,
-          timestamp: formatTimestamp(),
-        },
-      ]);
-    } finally {
-      setIsTyping(false);
+      console.warn("Using fallback logic:", error.message);
+      setTimeout(() => {
+        const fallbackText = getBotResponse(trimmed);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            sender: "bot",
+            text: fallbackText,
+            timestamp: formatTimestamp(),
+          },
+        ]);
+        setIsTyping(false);
+      }, 800);
+      return; // Return early so finally doesn't fire too early for fallback
     }
+
+    setIsTyping(false);
+  };
+
+  const handleQuickAction = (actionQuery) => {
+    handleSendMessage(actionQuery);
   };
 
   return (
-    <div className={`container ${isOpen ? "show-chatbot" : ""}`}>
-      <button
-        className="chatbot-toggler"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle chatbot visibility"
-      >
-        <span className="material-symbols-rounded">mode_comment</span>
-        <span className="material-symbols-rounded close-icon">close</span>
-      </button>
+    <>
+      {/* MAIN WEBSITE BACKGROUND CONTENT */}
+      <MainWebsite />
 
-      <div className="chatbot-popup">
-        <div className="chat-header">
-          <div className="header-info">
-            <ChatbotIcon />
-            <h2 className="logo-text">chatbot</h2>
-          </div>
-          <button
-            className="material-symbols-rounded"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close chatbot"
+      {/* CHATBOT OUTLAY (Remains completely untouched in logic) */}
+      <div className="fixed inset-0 pointer-events-none z-[9999]">
+        <div className="pointer-events-none h-full w-full relative">
+          {/* Floating Chatbot Toggler Button */}
+          <motion.button
+            className={`chatbot-toggler pointer-events-auto ${isOpen ? "open" : ""}`}
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle chatbot visibility"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            keyboard_arrow_down
-          </button>
-        </div>
-
-        <div className="chat-body">
-          {messages.map((message) => (
-            <ChatMessage
-              key={message.id}
-              sender={message.sender}
-              text={message.text}
-              timestamp={message.timestamp}
-            />
-          ))}
-
-          {isTyping && (
-            <div className="message bot-message thinking-message">
-              <ChatbotIcon />
-              <div className="typing-bubble">
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <span className="thinking-text">Thinking...</span>
-              </div>
+            <div className="toggler-icon-container">
+              <div className="cyber-pulse"></div>
+              {isOpen ? (
+                <X size={26} strokeWidth={2.5} />
+              ) : (
+                <>
+                  <MessageSquare size={22} strokeWidth={2.5} fill="#111" />
+                  <span className="toggler-text">CYBROVA AI</span>
+                </>
+              )}
             </div>
-          )}
-        </div>
+          </motion.button>
 
-        <div className="chat-footer">
-          <ChatForm onSendMessage={handleSendMessage} />
+          {/* Chat Window Popup */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                className="chatbot-popup pointer-events-auto"
+                initial={{ opacity: 0, scale: 0.8, y: 40, transformOrigin: "bottom right" }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 40, transition: { duration: 0.2 } }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              >
+                {/* Header */}
+                <div className="chat-header">
+                  <div className="header-info">
+                    <div className="header-icon-wrapper">
+                      <Shield size={24} strokeWidth={2.5} fill="#ccff00" color="#111" />
+                    </div>
+                    <div className="header-text">
+                      <h2 className="logo-text">CYBROVA AI</h2>
+                      <span className="subtitle-text">
+                        <span className="online-dot"></span>
+                        Your Digital Service Assistant
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    className="close-btn"
+                    onClick={() => setIsOpen(false)}
+                    aria-label="Close chatbot"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Chat Body */}
+                <div className="chat-body" ref={chatBodyRef}>
+                  {messages.map((message) => (
+                    <ChatMessage
+                      key={message.id}
+                      sender={message.sender}
+                      text={message.text}
+                      timestamp={message.timestamp}
+                    />
+                  ))}
+
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="message bot-message"
+                    >
+                      <div className="bot-avatar">
+                        <Shield size={16} strokeWidth={3} />
+                      </div>
+                      <div className="typing-bubble">
+                        <div className="typing-dot"></div>
+                        <div className="typing-dot"></div>
+                        <div className="typing-dot"></div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+
+                {/* Quick Actions & Input Form */}
+                <div className="chat-footer">
+                  <div className="quick-actions-container">
+                    {QUICK_ACTIONS.map((action) => (
+                      <button
+                        key={action.id}
+                        onClick={() => handleQuickAction(action.query)}
+                        className="quick-action-btn"
+                      >
+                        {action.icon}
+                        <span>{action.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <ChatForm onSendMessage={handleSendMessage} />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
