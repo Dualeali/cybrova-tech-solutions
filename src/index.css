@@ -541,18 +541,18 @@ h4,
 /* RESPONSIVE DESIGN (MOBILE FIXES) */
 @media (max-width: 600px) {
   .chatbot-popup {
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100dvh;
-    /* use dynamic viewport height */
-    max-height: 100dvh;
-    border-radius: 0;
-    border: none;
+    right: 16px;
+    bottom: 90px; /* Sits cleanly above the toggler */
+    width: calc(100vw - 32px);
+    height: 65dvh; /* Middle size as requested */
+    max-height: 550px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   .chatbot-toggler {
-    right: 20px;
+    right: 16px;
     bottom: 20px;
   }
 
@@ -561,6 +561,6 @@ h4,
   }
 
   .chat-footer {
-    padding-bottom: env(safe-area-inset-bottom, 20px);
+    padding-bottom: 12px;
   }
 }
