@@ -8,6 +8,11 @@ const InstallPWA = () => {
   const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
+    // Check if the app is already installed/running in standalone mode
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        return; // Do not show install prompt if already installed
+    }
+
     // Check if the user has already dismissed the prompt
     const dismissedAt = localStorage.getItem('cybrova_pwa_dismissed');
     if (dismissedAt) {

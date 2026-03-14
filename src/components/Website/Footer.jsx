@@ -1,6 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+    const navLinks = [
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Bingwa Deals', path: '/deals' },
+        { name: 'About Us', path: '/about' },
+        { name: 'Contact', path: '/contact' },
+    ];
+
     return (
         <footer className="relative bg-brand-dark pt-16 pb-8 border-t border-white/5 overflow-hidden">
 
@@ -22,11 +31,11 @@ const Footer = () => {
                     <div>
                         <h4 className="text-white font-bold font-outfit mb-6">Quick Links</h4>
                         <ul className="space-y-3">
-                            {['Home', 'Services', 'Bingwa Deals', 'About Us', 'Contact'].map((link) => (
-                                <li key={link}>
-                                    <a href={`#${link.toLowerCase().replace(' ', '')}`} className="text-gray-400 hover:text-brand-neon text-sm transition-colors">
-                                        {link}
-                                    </a>
+                            {navLinks.map((link) => (
+                                <li key={link.name}>
+                                    <Link to={link.path} className="text-gray-400 hover:text-brand-neon text-sm transition-colors">
+                                        {link.name}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

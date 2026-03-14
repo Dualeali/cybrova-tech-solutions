@@ -118,6 +118,29 @@ h4,
 }
 
 /* =========================================
+   CYBER GLITCH HOVER EFFECT
+   ========================================= */
+.cyber-glitch {
+  transition: all 0.2s;
+  display: inline-block;
+}
+
+.cyber-glitch:hover {
+  animation: cyberGlitch 0.3s ease-in-out infinite alternate;
+  color: #fff !important; /* Force solid color during glitch */
+  -webkit-text-fill-color: #fff !important;
+}
+
+@keyframes cyberGlitch {
+  0% { text-shadow: 3px 0 0 #ff00ea, -3px 0 0 #00ff88; transform: skewX(0deg); }
+  20% { text-shadow: -3px -2px 0 #ff00ea, 3px 2px 0 #00ff88; transform: skewX(2deg); }
+  40% { text-shadow: 3px -2px 0 #ff00ea, -3px 2px 0 #00ff88; transform: skewX(-2deg); }
+  60% { text-shadow: -3px 2px 0 #ff00ea, 3px -2px 0 #00ff88; transform: skewX(1deg); }
+  80% { text-shadow: 3px 2px 0 #ff00ea, -3px -2px 0 #00ff88; transform: skewX(-1deg); }
+  100% { text-shadow: 0 0 0 #ff00ea, 0 0 0 #00ff88; transform: skewX(0deg); }
+}
+
+/* =========================================
    CHAT WINDOW
    ========================================= */
 .chatbot-popup {
@@ -183,6 +206,7 @@ h4,
   letter-spacing: 0.5px;
   background: linear-gradient(90deg, #ccff00, #00ff88);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
 }

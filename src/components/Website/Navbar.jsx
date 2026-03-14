@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
 
     const navLinks = [
-        { name: 'Home', href: '#home' },
-        { name: 'Services', href: '#services' },
-        { name: 'Bingwa Deals', href: '#bingwa' },
-        { name: 'About', href: '#about' },
-        { name: 'Contact', href: '#contact' },
+        { name: 'Home', path: '/' },
+        { name: 'Services', path: '/services' },
+        { name: 'Bingwa Deals', path: '/deals' },
+        { name: 'About', path: '/about' },
+        { name: 'Contact', path: '/contact' },
     ];
 
     return (
@@ -19,31 +21,33 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-20">
 
                     {/* Logo Placeholder */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex-shrink-0 flex items-center gap-3 cursor-pointer"
-                    >
-                        <img src="/logo.png" alt="CYBROVA Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,255,136,0.3)]" />
-                        <span className="font-outfit font-bold text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-brand-neon to-brand-neon-light">
-                            CYBROVA
-                        </span>
-                    </motion.div>
+                    <Link to="/">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
+                        >
+                            <img src="/logo.png" alt="CYBROVA Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,255,136,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(0,255,136,0.8)] transition-all" />
+                            <span className="font-outfit font-bold text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-brand-neon to-brand-neon-light cyber-glitch">
+                                CYBROVA
+                            </span>
+                        </motion.div>
+                    </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link, index) => (
-                            <motion.a
-                                key={link.name}
-                                href={link.href}
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: index * 0.1 }}
-                                className="text-gray-300 hover:text-white font-medium text-sm transition-colors relative group"
-                            >
-                                {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-neon transition-all duration-300 group-hover:w-full"></span>
-                            </motion.a>
+                            <Link key={link.name} to={link.path}>
+                                <motion.span
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className={`font-medium text-sm transition-colors relative group block ${location.pathname === link.path ? 'text-brand-neon' : 'text-gray-300 hover:text-white'}`}
+                                >
+                                    {link.name}
+                                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-brand-neon transition-all duration-300 ${location.pathname === link.path ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+                                </motion.span>
+                            </Link>
                         ))}
                         <motion.button
                             onClick={() => {
@@ -100,14 +104,14 @@ const Navbar = () => {
                     >
                         <div className="px-4 pt-2 pb-6 space-y-2">
                             {navLinks.map((link) => (
-                                <a
+                                <Link
                                     key={link.name}
-                                    href={link.href}
+                                    to={link.path}
                                     onClick={() => setIsOpen(false)}
-                                    className="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-white/5"
+                                    className={`block px-3 py-3 rounded-md text-base font-medium ${location.pathname === link.path ? 'text-brand-neon bg-white/5' : 'text-gray-300 hover:text-white hover:bg-white/5'}`}
                                 >
                                     {link.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </motion.div>

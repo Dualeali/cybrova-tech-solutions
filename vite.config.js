@@ -8,6 +8,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['logo.png', 'ceo.jpeg'],
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpeg}']
+      },
       manifest: {
         name: 'CYBROVA TECH SOLUTIONS',
         short_name: 'CYBROVA',
