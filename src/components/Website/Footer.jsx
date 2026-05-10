@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Instagram, Twitter, Youtube, Facebook } from 'lucide-react';
 
 const Footer = () => {
     const navLinks = [
@@ -60,12 +61,22 @@ const Footer = () => {
                         <p className="text-brand-accent text-sm font-medium mb-6">cybrovatechsolutions@gmail.com</p>
 
                         <div className="flex gap-4">
-                            {[1, 2, 3, 4].map((i) => (
-                                <a key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-neon/20 hover:text-brand-neon transition-colors border border-white/5">
-                                    <span className="sr-only">Social {i}</span>
-                                    <div className="w-4 h-4 rounded-sm bg-gray-500"></div> {/* Placeholder icon */}
-                                </a>
-                            ))}
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#E1306C] hover:text-white text-gray-400 transition-colors border border-white/5">
+                                <span className="sr-only">Instagram</span>
+                                <Instagram size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1DA1F2] hover:text-white text-gray-400 transition-colors border border-white/5">
+                                <span className="sr-only">Twitter</span>
+                                <Twitter size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#FF0000] hover:text-white text-gray-400 transition-colors border border-white/5">
+                                <span className="sr-only">YouTube</span>
+                                <Youtube size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] hover:text-white text-gray-400 transition-colors border border-white/5">
+                                <span className="sr-only">Facebook</span>
+                                <Facebook size={18} />
+                            </a>
                         </div>
                     </div>
                 </div>

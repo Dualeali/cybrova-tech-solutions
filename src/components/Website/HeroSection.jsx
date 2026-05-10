@@ -23,7 +23,7 @@ const HeroSection = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="mx-auto w-32 h-32 mb-8 relative flex items-center justify-center animate-pulse-slow"
                 >
-                    <img src="/logo.png" alt="CYBROVA Logo" className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,255,136,0.4)]" />
+                    <img src="/logo.jpeg" alt="CYBROVA Logo" className="w-full h-full object-contain drop-shadow-[0_0_30px_rgba(0,255,136,0.4)]" />
                 </motion.div>
 
                 <motion.h1

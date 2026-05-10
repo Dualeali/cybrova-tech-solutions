@@ -27,8 +27,10 @@ const Navbar = () => {
                             animate={{ opacity: 1, x: 0 }}
                             className="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
                         >
-                            <img src="/logo.png" alt="CYBROVA Logo" className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(0,255,136,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(0,255,136,0.8)] transition-all" />
-                            <span className="font-outfit font-bold text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-brand-neon to-brand-neon-light cyber-glitch">
+                            <div className="relative p-0.5 rounded-full bg-gradient-to-br from-brand-neon to-brand-neon-light shadow-[0_0_15px_rgba(0,255,136,0.4)] group-hover:shadow-[0_0_25px_rgba(0,255,136,0.8)] transition-all duration-300">
+                                <img src="/logo.jpeg" alt="CYBROVA Logo" className="w-11 h-11 sm:w-12 sm:h-12 object-cover rounded-full border-2 border-brand-dark" />
+                            </div>
+                            <span className="font-outfit font-bold text-xl sm:text-2xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-brand-neon to-brand-neon-light cyber-glitch">
                                 CYBROVA
                             </span>
                         </motion.div>

@@ -83,9 +83,9 @@ const InstallPWA = () => {
           </button>
 
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 shrink-0 rounded-2xl p-1 bg-gradient-to-br from-lime-400 to-yellow-400 shadow-[0_0_15px_rgba(204,255,0,0.5)]">
-              <div className="w-full h-full bg-black/80 rounded-xl flex items-center justify-center p-2 backdrop-blur-sm">
-                <img src="/logo.png" alt="CYBROVA App Logo" className="w-full h-full object-contain" />
+            <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-[1.25rem] p-[3px] bg-gradient-to-br from-lime-400 to-yellow-400 shadow-[0_0_20px_rgba(204,255,0,0.4)]">
+              <div className="w-full h-full bg-brand-dark rounded-xl overflow-hidden flex items-center justify-center">
+                <img src="/logo.jpeg" alt="CYBROVA App Logo" className="w-full h-full object-cover" />
               </div>
             </div>
             
