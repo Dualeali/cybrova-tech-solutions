@@ -19,8 +19,9 @@ function App() {
     {
       id: 1,
       sender: "bot",
-      text: "Hello! 👋 Welcome to CYBROVA TECH SOLUTIONS.\n\nMy name is **CYBROVA AI**, your official digital assistant. I'm here to provide you with lightning-fast support for Website Development, KRA & Government Services, KUCCPS assistance, and instant Bingwa Data Bundles.\n\nHow can I help you accelerate your digital journey today?",
+      text: "Hello! 👋 Welcome to CYBROVA TECH SOLUTIONS. How can I help you today? Would you like to know more about our services?",
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      animated: false,
     },
   ]);
 
@@ -47,7 +48,7 @@ function App() {
     }
 
     if (lower.includes("hello") || lower.includes("hi")) {
-      return "Hello! 👋 Welcome to CYBROVA TECH SOLUTIONS.\n\nMy name is **CYBROVA AI**, the official intelligence engine behind this platform. Whether you need an instant data bundle, a professional website, or help with government portals, I am here to serve you.\n\nWhat can we accomplish together today?";
+      return "Hello! 👋 Welcome to CYBROVA TECH SOLUTIONS. How can I help you today? Would you like to know more about our services?";
     }
 
     if (lower.includes("help") || lower.includes("services") || lower.includes("cyber")) {
@@ -153,7 +154,7 @@ function App() {
 
         for (let i = 0; i < geminiKeys.length; i++) {
           try {
-            const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent", {
+            const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -186,6 +187,7 @@ function App() {
           sender: "bot",
           text: botText,
           timestamp: formatTimestamp(),
+          animated: true,
         },
       ]);
     } catch (error) {
@@ -199,10 +201,11 @@ function App() {
             sender: "bot",
             text: fallbackText,
             timestamp: formatTimestamp(),
+            animated: true,
           },
         ]);
         setIsTyping(false);
-      }, 800);
+      }, 300);
       return; // Return early so finally doesn't fire too early for fallback
     }
 
@@ -233,10 +236,10 @@ function App() {
             <div className="toggler-icon-container">
               <div className="cyber-pulse"></div>
               {isOpen ? (
-                <X size={26} strokeWidth={2.5} />
+                <X size={24} strokeWidth={2.5} />
               ) : (
                 <>
-                  <MessageSquare size={22} strokeWidth={2.5} fill="#111" />
+                  <MessageSquare size={20} strokeWidth={2.5} fill="#111" />
                   <span className="toggler-text">CYBROVA AI</span>
                 </>
               )}
@@ -284,6 +287,7 @@ function App() {
                       sender={message.sender}
                       text={message.text}
                       timestamp={message.timestamp}
+                      animated={message.animated}
                     />
                   ))}
 

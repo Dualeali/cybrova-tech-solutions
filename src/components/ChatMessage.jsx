@@ -4,9 +4,36 @@ import { motion } from "framer-motion";
 import { Copy, Check } from "lucide-react";
 import ChatbotIcon from "./ChatbotIcon";
 
-function ChatMessage({ sender, text, timestamp }) {
+function ChatMessage({ sender, text, timestamp, animated }) {
   const isBot = sender === "bot";
   const [copied, setCopied] = useState(false);
+  const hasAnimated = React.useRef(!animated);
+  const [displayedText, setDisplayedText] = useState(hasAnimated.current ? text : "");
+
+  React.useEffect(() => {
+    if (!isBot || hasAnimated.current) {
+      setDisplayedText(text);
+      return;
+    }
+
+    let i = 0;
+    const interval = setInterval(() => {
+      i += 4; // Reveal 4 characters at a time for blazing speed
+      setDisplayedText(text.slice(0, i));
+      
+      const chatBody = document.querySelector(".chat-body");
+      if (chatBody) {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      if (i >= text.length) {
+        clearInterval(interval);
+        hasAnimated.current = true;
+      }
+    }, 5);
+    
+    return () => clearInterval(interval);
+  }, [text, isBot]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
@@ -34,7 +61,7 @@ function ChatMessage({ sender, text, timestamp }) {
               >
                 {copied ? <Check size={12} strokeWidth={3} /> : <Copy size={12} strokeWidth={2.5} />}
               </button>
-              <ReactMarkdown>{text}</ReactMarkdown>
+              <ReactMarkdown>{displayedText}</ReactMarkdown>
             </>
           ) : (
             <p>{text}</p>
