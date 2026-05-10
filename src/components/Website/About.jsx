@@ -46,24 +46,15 @@ const About = () => {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="relative h-[400px] rounded-3xl overflow-hidden group border border-white/10"
+                        className="relative h-[400px] rounded-3xl overflow-hidden group border border-white/10 shadow-[0_0_30px_rgba(204,255,0,0.15)]"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-purple to-coffee-brown/80"></div>
-
-                        {/* Abstract Tech Graphic Effect */}
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjE1KSIvPjwvc3ZnPg==')] opacity-30 group-hover:opacity-50 transition-opacity"></div>
-
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-32 h-32 rounded-full border border-brand-accent/40 flex items-center justify-center animate-pulse-slow">
-                                <div className="w-24 h-24 rounded-full border border-brand-neon/40 flex items-center justify-center">
-                                    <div className="w-16 h-16 rounded-full bg-brand-neon/20 blur-sm"></div>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="/ceo.jpeg" alt="CYBROVA Leadership" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                        
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none"></div>
 
                         {/* Floating Glass Box */}
-                        <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl transform translate-y-4 group-hover:translate-y-0 opacity-80 group-hover:opacity-100 transition-all duration-500">
-                            <p className="text-sm font-medium text-white">Innovation in Wajir. Serving the World.</p>
+                        <div className="absolute bottom-6 left-6 right-6 p-6 bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl transform translate-y-2 group-hover:translate-y-0 opacity-90 group-hover:opacity-100 transition-all duration-500">
+                            <p className="text-sm md:text-base font-bold text-lime-400 tracking-wide">Innovation in Wajir. Serving the World.</p>
                         </div>
                     </motion.div>
 

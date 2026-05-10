@@ -24,7 +24,7 @@ const Newsletter = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="bg-gradient-to-br from-lime-400/20 via-black/80 to-yellow-400/20 border border-white/20 rounded-[3rem] p-10 md:p-16 text-center backdrop-blur-xl shadow-[0_0_50px_rgba(204,255,0,0.15)] relative overflow-hidden"
+                    className="bg-gradient-to-br from-lime-400/20 via-black/80 to-yellow-400/20 border border-white/20 rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-16 text-center backdrop-blur-xl shadow-[0_0_50px_rgba(204,255,0,0.15)] relative overflow-hidden"
                 >
                     {/* Decorative subtle grid */}
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-20"></div>
@@ -37,19 +37,19 @@ const Newsletter = () => {
                     </p>
 
                     <form onSubmit={handleSubscribe} className="max-w-md mx-auto relative z-10">
-                        <div className="relative flex items-center">
+                        <div className="relative flex flex-col sm:flex-row items-center gap-3 sm:gap-0">
                             <input
                                 type="email"
                                 placeholder="Enter your email address..."
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full bg-black/50 border border-white/20 rounded-full py-4 pl-6 pr-36 text-white placeholder-gray-400 focus:outline-none focus:border-lime-400 focus:shadow-[0_0_20px_rgba(163,230,53,0.3)] transition-all"
+                                className="w-full bg-black/50 border border-white/20 rounded-full py-4 px-6 sm:pr-36 text-white placeholder-gray-400 focus:outline-none focus:border-lime-400 focus:shadow-[0_0_20px_rgba(163,230,53,0.3)] transition-all text-center sm:text-left"
                             />
                             <button
                                 type="submit"
                                 disabled={subscribed}
-                                className={`absolute right-1.5 top-1.5 bottom-1.5 px-6 rounded-full font-bold transition-all flex items-center justify-center gap-2 ${
+                                className={`w-full sm:w-auto sm:absolute right-1.5 top-1.5 bottom-1.5 px-6 py-4 sm:py-0 rounded-full font-bold transition-all flex items-center justify-center gap-2 ${
                                     subscribed
                                         ? 'bg-green-500 text-white'
                                         : 'bg-lime-400 text-black hover:bg-lime-300 hover:scale-105'

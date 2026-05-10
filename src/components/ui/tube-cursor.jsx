@@ -94,11 +94,11 @@ const TubesCursor = ({
         >
           {caption}
         </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-6 pointer-events-auto">
-           <a href="#why-choose-us" className="px-8 py-4 rounded-full bg-lime-400 text-black font-extrabold hover:bg-lime-300 hover:scale-105 transition-all shadow-[0_0_25px_rgba(163,230,53,0.5)] inline-block">
+        <div className="mt-8 md:mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-6 pointer-events-auto w-full px-4 sm:px-0">
+           <a href="#why-choose-us" className="w-full sm:w-auto px-6 py-4 md:px-8 rounded-full bg-lime-400 text-black font-extrabold hover:bg-lime-300 hover:scale-105 transition-all shadow-[0_0_25px_rgba(163,230,53,0.5)] inline-block">
               Get Started Now
            </a>
-           <Link to="/services" className="px-8 py-4 rounded-full border-2 border-white/40 text-white font-bold hover:bg-white/20 hover:border-white transition-all backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)] inline-block">
+           <Link to="/services" className="w-full sm:w-auto px-6 py-4 md:px-8 rounded-full border-2 border-white/40 text-white font-bold hover:bg-white/20 hover:border-white transition-all backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.1)] inline-block">
               Explore Our Services
            </Link>
         </div>

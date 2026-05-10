@@ -53,7 +53,7 @@ const WhyChooseUs = () => {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     {features.map((feature, index) => (
                         <motion.div
                             key={index}
@@ -61,9 +61,9 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, type: "spring" }}
-                            className="bg-black/40 border border-white/10 p-8 rounded-3xl backdrop-blur-md hover:border-lime-400/40 hover:bg-white/5 transition-all duration-300 group flex items-start gap-6"
+                            className="bg-black/40 border border-white/10 p-6 md:p-8 rounded-[2rem] backdrop-blur-md hover:border-lime-400/40 hover:bg-white/5 transition-all duration-300 group flex flex-col sm:flex-row items-start gap-4 sm:gap-6 text-center sm:text-left"
                         >
-                            <div className="shrink-0 p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 group-hover:bg-lime-400/10 transition-all duration-300 shadow-lg">
+                            <div className="shrink-0 mx-auto sm:mx-0 p-4 rounded-2xl bg-white/5 border border-white/10 group-hover:scale-110 group-hover:bg-lime-400/10 transition-all duration-300 shadow-lg">
                                 {feature.icon}
                             </div>
                             <div>
