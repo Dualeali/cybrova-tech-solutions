@@ -69,10 +69,10 @@ const InstallPWA = () => {
         transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         className="fixed bottom-0 left-0 w-full z-[10000] p-4 md:p-6 pointer-events-none"
       >
-        <div className="max-w-md mx-auto bg-brand-dark border border-brand-neon/40 shadow-[0_0_30px_rgba(0,255,136,0.3)] rounded-2xl p-4 md:p-5 pointer-events-auto flex flex-col gap-4 relative overflow-hidden backdrop-blur-xl bg-opacity-95">
+        <div className="max-w-md mx-auto bg-black/60 border border-white/20 shadow-[0_0_40px_rgba(204,255,0,0.2)] rounded-3xl p-5 pointer-events-auto flex flex-col gap-5 relative overflow-hidden backdrop-blur-xl">
           
           {/* Neon Top Trim */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-neon to-brand-accent"></div>
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-neon to-yellow-400"></div>
 
           <button 
             onClick={handleDismiss}
@@ -83,8 +83,8 @@ const InstallPWA = () => {
           </button>
 
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 shrink-0 rounded-2xl p-1 bg-gradient-to-br from-brand-neon to-brand-neon-light shadow-lg">
-              <div className="w-full h-full bg-brand-dark rounded-xl flex items-center justify-center p-2">
+            <div className="w-16 h-16 shrink-0 rounded-2xl p-1 bg-gradient-to-br from-lime-400 to-yellow-400 shadow-[0_0_15px_rgba(204,255,0,0.5)]">
+              <div className="w-full h-full bg-black/80 rounded-xl flex items-center justify-center p-2 backdrop-blur-sm">
                 <img src="/logo.png" alt="CYBROVA App Logo" className="w-full h-full object-contain" />
               </div>
             </div>
@@ -97,7 +97,7 @@ const InstallPWA = () => {
 
           <button
             onClick={onClickInstall}
-            className="w-full py-3 rounded-xl bg-brand-neon text-brand-dark font-bold font-outfit shadow-[0_0_15px_rgba(0,255,136,0.5)] hover:bg-brand-neon-light hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-full bg-lime-400 text-black font-extrabold font-outfit shadow-[0_0_20px_rgba(163,230,53,0.5)] hover:bg-lime-300 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
           >
             <Download size={18} /> Install App Directly
           </button>

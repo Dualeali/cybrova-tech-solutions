@@ -127,7 +127,12 @@ const BingwaDeals = () => {
                                         <Clock size={16} className="text-brand-accent" />
                                         Valid: {bundle.valid}
                                     </div>
-                                    <a href="#how-to-buy" className="w-full py-3 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-white font-medium hover:bg-brand-accent/20 hover:border-brand-accent/50 transition-colors group-hover:text-brand-neon text-sm">
+                                    <a 
+                                        href={`https://wa.me/254797400491?text=Hello%20Cybrova,%20I%20want%20to%20buy%20the%20${encodeURIComponent(bundle.name)}%20for%20${encodeURIComponent(bundle.price)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full py-3 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center gap-2 text-white font-medium hover:bg-brand-neon/20 hover:border-brand-neon/50 transition-colors group-hover:text-brand-neon text-sm"
+                                    >
                                         <ShoppingCart size={16} /> Buy Now
                                     </a>
                                 </div>

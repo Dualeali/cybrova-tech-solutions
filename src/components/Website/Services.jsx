@@ -50,9 +50,9 @@ const Services = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="text-3xl md:text-5xl font-outfit font-bold mb-4"
+                        className="text-3xl md:text-5xl font-outfit font-bold mb-4 text-white"
                     >
-                        Our Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-neon">Services</span>
+                        Our Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-neon to-yellow-400">Services</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -74,22 +74,22 @@ const Services = () => {
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1, duration: 0.5 }}
                             whileHover={{ y: -5 }}
-                            className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm group hover:border-brand-neon/50 hover:shadow-[0_0_30px_rgba(204,255,0,0.15)] transition-all duration-300 relative overflow-hidden"
+                            className="bg-black/40 border border-white/10 rounded-3xl p-8 backdrop-blur-md group hover:border-brand-neon/50 hover:shadow-[0_0_40px_rgba(204,255,0,0.2)] transition-all duration-300 relative overflow-hidden"
                         >
                             {/* Subtle gradient background on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-brand-purple/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-brand-neon/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-brand-neon/10 group-hover:border-brand-neon/30 transition-all duration-300 shadow-lg">
                                     {category.icon}
                                 </div>
                                 <h3 className="text-xl font-outfit font-bold mb-4 text-white group-hover:text-brand-neon transition-colors">
                                     {category.title}
                                 </h3>
-                                <ul className="space-y-2 mt-auto">
+                                <ul className="space-y-3 mt-auto">
                                     {category.items.map((item, i) => (
-                                        <li key={i} className="text-sm text-gray-400 flex items-start gap-2">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-brand-accent mt-1.5 flex-shrink-0"></span>
+                                        <li key={i} className="text-sm text-gray-300 flex items-start gap-3 group-hover:text-white transition-colors">
+                                            <span className="w-2 h-2 rounded-full bg-brand-neon mt-1.5 flex-shrink-0 shadow-[0_0_10px_rgba(204,255,0,0.8)]"></span>
                                             {item}
                                         </li>
                                     ))}
