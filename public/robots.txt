@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://cybrovatechsolutions.com/sitemap.xml
+llms: https://cybrovatechsolutions.com/llms.txt
