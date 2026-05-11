@@ -1,10 +1,10 @@
 import React from "react";
-import { Bot } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 function ChatbotIcon({ className = "" }) {
   return (
     <div className={`bot-avatar ${className}`}>
-      <Bot size={20} strokeWidth={2.5} color="#111" />
+      <Sparkles size={16} strokeWidth={2.5} color="#111" />
     </div>
   );
 }

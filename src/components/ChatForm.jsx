@@ -21,7 +21,7 @@ function ChatForm({ onSendMessage }) {
       <input
         type="text"
         name="message"
-        placeholder="Type your message..."
+        placeholder="Type..."
         className="message-input"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -33,7 +33,7 @@ function ChatForm({ onSendMessage }) {
         disabled={!value.trim()}
         aria-label="Send message"
       >
-        <Send size={18} strokeWidth={2.5} />
+        <Send size={14} strokeWidth={2} />
       </button>
     </form>
   );
